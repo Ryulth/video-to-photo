@@ -1,6 +1,6 @@
  video_to_photo
  ==============
-*pip install numpy  
-*pip install opencv-python  
-*pip install opencv-contrib-python
-*pip install imutils
+*pip install numpy  <br/>
+*pip install opencv-python <br/>
+*pip install opencv-contrib-python <br/>
+*pip install imutils <br/>
