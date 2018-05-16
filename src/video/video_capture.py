@@ -27,8 +27,8 @@ def extractImages(pathIn, pathOut):
     extractImages(args.pathIn, args.pathOut)
 """
 
-pathin='./image/tempvideo1.mp4'
-pathout='./image/result'
+pathin='./data/tempvideo1.mp4'
+pathout='./data/result'
 start = timeit.default_timer()
 extractImages(pathin,pathout)
 end = timeit.default_timer()
