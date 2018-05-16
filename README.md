@@ -9,5 +9,9 @@
 
  gui-programming setting
  ----------------
- pip3 install PyQt5
- pip3 install PyQt5-tools
+ pip3 install PyQt5 <br/>
+ pip3 install PyQt5-tools <br/>
+
+ gui-programming tools
+ ----------------
+ Qt Designer
