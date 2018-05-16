@@ -2,7 +2,12 @@
  ==============
  default setting
  --------------
-*pip install numpy  <br/>
-*pip install opencv-python <br/>
-*pip install opencv-contrib-python <br/>
-*pip install imutils <br/>
+ pip3 install numpy  <br/>
+ pip3 install opencv-python <br/>
+ pip3 install opencv-contrib-python <br/>
+ pip3 install imutils <br/>
+
+ gui-programming setting
+ ----------------
+ pip3 install PyQt5
+ pip3 install PyQt5-tools
