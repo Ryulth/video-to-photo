@@ -1,6 +1,6 @@
 import cv2
 
-pathin='small.mp4'
+pathin='data/tempvideo.mp4'
 cap = cv2.VideoCapture(pathin)
 
 while(cap.isOpened()):
