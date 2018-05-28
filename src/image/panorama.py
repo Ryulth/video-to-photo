@@ -34,6 +34,8 @@ class Stitcher:
         print(imageA.shape)
         print(imageB.shape)
         print(result.shape)
+        cv2.imshow("tempresult",result)
+
         result[0:imageA.shape[0], 0:imageA.shape[1]] = imageB
 
         # check to see if the keypoint matches should be visualized
@@ -113,7 +115,7 @@ class Stitcher:
         vis = np.zeros((max(hA, hB), wA + wB, 3), dtype="uint8")
         vis[0:hA, 0:wA] = imageA
         vis[0:hB, wA:] = imageB
-
+        print(len(matches))
         # loop over the matches
         for ((trainIdx, queryIdx), s) in zip(matches, status):
             # only process the match if the keypoint was successfully
