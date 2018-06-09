@@ -1,96 +1,73 @@
-import cv2, numpy as np
-import sys
-from time import sleep
+import tkinter as tk
+from tkinter import filedialog
 
-def flick(x):
-    pass
-
-cv2.namedWindow('image')
-cv2.moveWindow('image',250,150)
-cv2.namedWindow('controls')
-cv2.moveWindow('controls',250,50)
-
-controls = np.zeros((50,750),np.uint8)
-cv2.putText(controls, "W/w: Play, S/s: Stay, A/a: Prev, D/d: Next, E/e: Fast, Q/q: Slow, Esc: Exit", (40,20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, 255)
-
-#video = sys.argv[1]
-
-pathin='data/tempvideo.mp4'
-cap = cv2.VideoCapture(pathin)
-
-tots = cap.get(cv2.CAP_PROP_FRAME_COUNT)
-i = 0
-cv2.createTrackbar('S','image', 0,int(tots)-1, flick)
-cv2.setTrackbarPos('S','image',0)
+pathin = ""
 
 
-cv2.createTrackbar('F','image', 1, 100, flick)
-frame_rate = 30
-cv2.setTrackbarPos('F','image',frame_rate)
 
-def process(im):
-    return cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 
-status = 'stay'
+if __name__ == "__main__":
+    arg = ["",""]
+    root = tk.Tk()
+    root.title("sex")
+    menubar = tk.Menu(root)
 
-while True:
-  cv2.imshow("controls",controls)
-  try:
-    if i==tots-1:
-      i=0
-    cap.set(cv2.CAP_PROP_FRAME_COUNT, i)
-    ret, im = cap.read()
-    r = 750.0 / im.shape[1]
-    dim = (750, int(im.shape[0] * r))
-    im = cv2.resize(im, dim, interpolation = cv2.INTER_AREA)
-    if im.shape[0]>600:
-        im = cv2.resize(im, (500,500))
-        controls = cv2.resize(controls, (im.shape[1],25))
-    #cv2.putText(im, status, )
+    filemenu = tk.Menu(menubar, tearoff=0)
 
-    status = { ord('s'):'stay', ord('S'):'stay',
-                ord('w'):'play', ord('W'):'play',
-                ord('a'):'prev_frame', ord('A'):'prev_frame',
-                ord('d'):'next_frame', ord('D'):'next_frame',
-                ord('q'):'slow', ord('Q'):'slow',
-                ord('e'):'fast', ord('E'):'fast',
-                ord('c'):'snap', ord('C'):'snap',ord(' '):'snap',
-                -1: status,
-                27: 'exit'}[cv2.waitKey(10)]
 
-    if status == 'play':
-        frame_rate = cv2.getTrackbarPos('F','image')
-        sleep((0.1-frame_rate/1000.0)**21021)
-        i+=1
-        cv2.setTrackbarPos('S','image',i)
-        cv2.imshow('image', im)
-        
-        continue
-    if status == 'stay':
-        i = cv2.getTrackbarPos('S','image')
-    if status == 'exit':
-        break
-    if status=='prev_frame':
-        i-=1
-        cv2.setTrackbarPos('S','image',i)
-        status='stay'
-    if status=='next_frame':
-        i+=1
-        cv2.setTrackbarPos('S','image',i)
-        status='stay'
-    if status=='slow':
-        frame_rate = max(frame_rate - 5, 0)
-        cv2.setTrackbarPos('F', 'image', frame_rate)
-        status='play'
-    if status=='fast':
-        frame_rate = min(100,frame_rate+5)
-        cv2.setTrackbarPos('F', 'image', frame_rate)
-        status='play'
-    if status=='snap':
-        cv2.imwrite("./"+"Snap_"+str(i)+".jpg",im)
-        print("Snap of Frame",i,"Taken!")
-        status='stay'
+    def path():
+        tk.Tk().withdraw()  # Close the root window
+        pathin = filedialog.askopenfilename()
+        print(pathin)
+        arg[0] = pathin
 
-  except KeyError:
-      print("Invalid Key was pressed")
-cv2.destroyWindow('image')
+    def donothing():
+        filewin = tk.Toplevel(root)
+        button = tk.Button(filewin, text="Do nothing button")
+        button.pack()
+
+    filemenu.add_command(label="Open", command=path)
+
+    filemenu.add_command(label="Save", command=donothing)
+
+    filemenu.add_separator()
+
+    filemenu.add_command(label="Exit", command=root.quit)
+    menubar.add_cascade(label="File", menu=filemenu)
+    editmenu = tk.Menu(menubar, tearoff=0)
+   # root.geometry("200x150")
+    lbl = tk.Label(root, text="input Frame")
+    lbl.grid(row=0, column=0)
+    txt = tk.Entry(root)
+    txt.grid(row=0, column=1)
+    lbl_fin=tk.Label(root,text="")
+    lbl_fin.grid(row=1, column=1)
+
+
+    def clicked():
+        value=txt.get()
+        res = txt.get() + " Frames"
+        print(value)
+        print(res)
+        lbl_fin.configure(text=res)
+        #lbl_fin2.configure(text="Frame")
+        arg[1] = value
+        print(arg)
+
+
+    processbt = tk.Button(root, text="Make_Panorama", width=15, command=clicked)
+    processbt.grid(row=0, column=2)
+    #lbl_fin.cget()
+    frame = txt.get()
+    print(type(frame))
+    print(frame)
+
+    """"
+    pathbt = tk.Button(root, text="Path",width = 15, command=path)
+    pathbt.grid(row=1,column=0)
+    processbt=tk.Button(root, text="Make_Panorama",width = 15, command=path)
+    processbt.grid(row=1,column=1)
+    """
+    root.config(menu=menubar)
+    root.mainloop()
+    #main()

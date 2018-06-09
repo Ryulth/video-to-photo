@@ -1,14 +1,11 @@
 import cv2
-
-pathin='data/tempvideo.mp4'
-cap = cv2.VideoCapture(pathin)
-
-while(cap.isOpened()):
-    ret, frame = cap.read()
-    #gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    cv2.imshow('frame',frame)
-
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-cap.release()
-cv2.destroyAllWindows()
+import time
+pathin='./data/test10.mp4'
+pathout=pathin[:-4]+'/result/'
+final=cv2.imread('./data/test10.jpg',cv2.IMREAD_COLOR)
+cv2.imshow("temp",final)
+cv2.waitKey(0)
+now = time.localtime()
+save_file = pathout+"\\%04d-%02d-%02d-%02d:%02d:%02d.jpg" % (now.tm_year, now.tm_mon, now.tm_mday, now.tm_hour, now.tm_min, now.tm_sec)
+print(save_file)
+cv2.imwrite("./data/test10.jpg",final)  # save frame as JPEG file
