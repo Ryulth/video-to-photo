@@ -1,3 +1,3 @@
-*.md
-*.pyc
-*.toc
+*.md linguist-vendored
+*.pyc linguist-vendored
+*.toc linguist-vendored
